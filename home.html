@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search</title>
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    background-color: #CDD7EA;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+form {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-family: Arial, sans-serif;
+    margin-left: 5px;
+}
+
+.flex {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+}
+
+</style>
+</head>
+    <body>
+        <h1>Movie Timeline</h1>
+        <h2>Enter the name of an actor or actress to view their movie timeline</h2>
+        <div class="flex">
+        <form action="/timeline" method="get" id="search">
+            <label for="actor">Name of actor/actress: </label>
+            <input type="text" id="actor" name="actor"><br>
+        </form>
+            <button type="submit" form="search" value="Submit">Submit</button>
+        </div>
+    </body>
+</html>
