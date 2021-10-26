@@ -42,7 +42,7 @@ def timeline():
         for key, value in actor_data.items():
             print(key, value)
             print(value['title'])
-    return render_template("timeline.html", actor_data=actor_data)
+    return render_template("timeline.html", actor=actor, actor_data=actor_data)
 
 
 if __name__ == '__main__':
