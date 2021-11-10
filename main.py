@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+import requests
+import json
 app = Flask(__name__)
 
 
@@ -11,38 +13,29 @@ def home():
 def timeline():
     default = '0'
     actor = request.args.get('actor', default)
-    print(actor == 'Arnold Schwarzenegger')
-    actor_data = 'null'
-    if actor == 'Arnold Schwarzenegger':
-        actor_data = {'hercules': {'title': 'Hercules in New York',
-                                   'year': 1970,
-                                   'director': "Arthur Allan Seidelman"},
-                      'conan': {'title': 'Conan the Barbarian',
-                                'year': 1982,
-                                'director': "John Milius"},
-                      'terminator': {'title': 'The Terminator',
-                                     'year': 1984,
-                                     'director': "James Cameron"},
-                      'running': {'title': 'The Running Man',
-                                  'year': 1987,
-                                  'director': "Paul Michael Glaser"},
-                      'kinder': {'title': 'Kindergarten Cop',
-                                 'year': 1990,
-                                 'director': "Ivan Reitman"},
-                      'terminator2': {'title': 'Terminator 2: Judgement Day',
-                                      'year': 1991,
-                                      'director': "James Cameron"},
-                      'jingle': {'title': 'Jingle All the Way',
-                                 'year': 1996,
-                                 'director': "Brian Levant"},
-                      'batman': {'title': 'Batman & Robin',
-                                 'year': 1997,
-                                 'director': "Joel Schumacher"}
-                      }
-        for key, value in actor_data.items():
-            print(key, value)
-            print(value['title'])
-    return render_template("timeline.html", actor=actor, actor_data=actor_data)
+    actor_url = 'http://localhost:4000/search/actor/' + actor
+
+    json_data = requests.get(actor_url)
+    actor_data = json.loads(json_data.text)
+    actor_data_dict = {}
+    for i in range(0, len(actor_data[:1][0]['cast'])):
+        if actor_data[:1][0]['cast'][i]['release_date'] != "":
+            movie_info_dict = {
+                'rating': actor_data[:1][0]['cast'][i]['vote_average'],
+                'title': actor_data[:1][0]['cast'][i]['title'],
+                'character': actor_data[:1][0]['cast'][i]['character']
+            }
+            actor_data_dict[actor_data[:1][0]['cast'][i]['release_date']] = movie_info_dict
+
+    # print(actor_data_dict["1985-12-20"]['title'])
+
+    # print(actor_data[:1][0]['cast'][0]['title'])
+
+    # year_title = actor_data[:1][0]['cast'][i]['release_date'] + ': ' + actor_data[:1][0]['cast'][i]['title']
+    # more_info = 'Character: ' + actor_data[:1][0]['cast'][i]['character']
+
+    return render_template("timeline.html", actor=actor, actor_data=actor_data_dict,
+                           num_movies=len(actor_data[:1][0]['cast']))
 
 
 if __name__ == '__main__':

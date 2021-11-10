@@ -218,79 +218,50 @@ body {
 </style>
 </head>
 <body>
-<div class="timeline">
+<div id="timeline" class="timeline">
   <div class="header">
   <a href="#default" class="logo">{{actor}}</a>
   <div class="header-right">
     <a href="/">Return to Home</a>
   </div>
-</div>
-  <div class="container left">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.hercules.year}}: {{actor_data.hercules.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.hercules.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.conan.year}}: {{actor_data.conan.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.conan.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container left">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.terminator.year}}: {{actor_data.terminator.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.terminator.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.running.year}}: {{actor_data.running.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.running.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container left">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.kinder.year}}: {{actor_data.kinder.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.kinder.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.terminator2.year}}: {{actor_data.terminator2.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.terminator2.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container left">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.jingle.year}}: {{actor_data.jingle.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.jingle.director}}</p>
-      </div>
-    </div>
-  </div>
-  <div class="container right">
-    <div class="content">
-      <button type="button" class="collapsible">{{actor_data.batman.year}}: {{actor_data.batman.title}}</button>
-      <div class="click_content">
-        <p>Directed by {{actor_data.batman.director}}</p>
-      </div>
-    </div>
   </div>
 </div>
 <script>
+var actor_data = JSON.parse('{{actor_data | tojson}}');
+var i = 0;
+for (let date in actor_data) {
+  var container_direction = document.createElement( 'div' );
+  if (i % 2 == 0) {
+    container_direction.className = "container left";
+  }
+  else {
+    container_direction.className = "container right";
+  }
+  var container_block = document.getElementById( 'timeline' );
+  container_block.appendChild( container_direction );
+
+    var content_div = document.createElement( 'div' );
+    content_div.className = "content";
+    container_direction.appendChild( content_div );
+
+    var button_add = document.createElement( 'button' );
+    button_add.type = "button";
+    button_add.className = "collapsible";
+    button_add.innerHTML = date + ': ' + actor_data[date]['title'];
+    content_div.appendChild( button_add );
+
+    var click_content_div = document.createElement( 'div' );
+    click_content_div.className = "click_content";
+    content_div.appendChild( click_content_div );
+
+    var more_info = document.createElement( 'p' );
+    more_info.innerHTML = 'Character: ' + actor_data[date]['character'] + "<br>" + 'Rating: ' +
+    actor_data[date]['rating'];
+    click_content_div.appendChild( more_info );
+
+    i++;
+}
+
 var coll = document.getElementsByClassName("collapsible");
 var i;
 
