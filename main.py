@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import requests
 import json
+import csv
 app = Flask(__name__)
 
 
@@ -17,6 +18,7 @@ def timeline():
 
     json_data = requests.get(actor_url)
     actor_data = json.loads(json_data.text)
+
     actor_data_dict = {}
     for i in range(0, len(actor_data[:1][0]['cast'])):
         if actor_data[:1][0]['cast'][i]['release_date'] != "":
@@ -27,6 +29,14 @@ def timeline():
             }
             actor_data_dict[actor_data[:1][0]['cast'][i]['release_date']] = movie_info_dict
 
+    with open('actorBio.csv', newline='') as csv_file:
+        file_reader = csv.reader(csv_file, delimiter=',', quotechar='|')
+        header = []
+        header = next(file_reader)
+        csv_dict = {}
+        for row in file_reader:
+            csv_dict[row[0]] = row[1]
+
     # print(actor_data_dict["1985-12-20"]['title'])
 
     # print(actor_data[:1][0]['cast'][0]['title'])
@@ -35,7 +45,7 @@ def timeline():
     # more_info = 'Character: ' + actor_data[:1][0]['cast'][i]['character']
 
     return render_template("timeline.html", actor=actor, actor_data=actor_data_dict,
-                           num_movies=len(actor_data[:1][0]['cast']))
+                           actor_csv_1=csv_dict['Born'], actor_csv_2=csv_dict['Occupation'])
 
 
 if __name__ == '__main__':
