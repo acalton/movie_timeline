@@ -1,0 +1,36 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Helvetica, sans-serif;
+    background-color: #CDD7EA;
+}
+
+h1 {
+    font-family: 'Montserrat', sans-serif;
+    text-align: center;
+}
+
+h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+form {
+    font-family: 'Montserrat', sans-serif;
+}
+
+button {
+    font-family: Arial, sans-serif;
+    margin-left: 5px;
+}
+
+/* For aligning search box and button in the middle */
+.flex {
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+   justify-content: center;
+}
