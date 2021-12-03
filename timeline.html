@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/timeline.css') }}">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
@@ -21,7 +21,7 @@
     </div>
 </div>
 <script>
-  var actor_data = JSON.parse('{{actor_data | tojson}}');
+var actor_data = JSON.parse('{{actor_data | tojson}}');
 var i = 0;
 for (let date in actor_data) {
   var container_direction = document.createElement( 'div' );
@@ -35,7 +35,7 @@ for (let date in actor_data) {
   container_block.appendChild( container_direction );
 
     var content_div = document.createElement( 'div' );
-    content_div.className = "content";
+    content_div.className = "info-border";
     container_direction.appendChild( content_div );
 
     var button_add = document.createElement( 'button' );
